@@ -1,0 +1,5 @@
+.idea
+.*config
+*.txt
+*.json
+local
