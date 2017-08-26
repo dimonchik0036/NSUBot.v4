@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	. "github.com/dimonchik0036/Miniapps-pro-SDK"
+	"github.com/dimonchik0036/Miniapps-pro-SDK"
 	"github.com/dimonchik0036/NSUBot/news"
 	"github.com/valyala/fasthttp"
 	"log"
@@ -18,14 +18,14 @@ func NewsHandler(subscribers []string, news []news.News, title string) {
 		}
 
 		for _, n := range news {
-			if err := subscriber.SendMessageBlock(Div("", EscapeString(title)+Br+EscapeString(n.URL)+Br+Br+stringCheck(n.Title)+stringCheck(n.Decryption)+EscapeString(time.Unix(n.Date, 0).Format("02.01.2006")))); err != nil {
+			if err := subscriber.SendMessageBlock(mapps.Div("", mapps.EscapeString(title)+mapps.Br+mapps.EscapeString(n.URL)+mapps.Br+mapps.Br+stringCheck(n.Title)+stringCheck(n.Decryption)+mapps.EscapeString(time.Unix(n.Date, 0).Format("02.01.2006")))); err != nil {
 				log.Printf("%s %s", subscriber.String(), err.Error())
 			}
 		}
 	}
 }
 
-func MainHandler(request *Request) {
+func MainHandler(request *mapps.Request) {
 	subscriber := CheckNewSubscriber(request)
 	subscriber.Queue.Lock()
 	defer subscriber.Queue.Unlock()
@@ -36,13 +36,13 @@ func MainHandler(request *Request) {
 	switch string(request.Page) {
 	default:
 		fmt.Fprint(request.Ctx,
-			Page("",
-				Div("", EscapeString(time.Now().Format(time.RFC3339))),
-				Navigation("",
-					Link("",
+			mapps.Page("",
+				mapps.Div("", mapps.EscapeString(time.Now().Format(time.RFC3339))),
+				mapps.Navigation("",
+					mapps.Link("",
 						"One",
 						"_1"),
-					Link("",
+					mapps.Link("",
 						"Two",
 						"_2"),
 				),
@@ -55,12 +55,12 @@ func stringCheck(s string) string {
 	if s == "" {
 		return ""
 	} else {
-		return EscapeString(s) + Br
+		return mapps.EscapeString(s) + mapps.Br
 	}
 }
 
 func fastHTTPHandler(ctx *fasthttp.RequestCtx) {
-	req, err := Decode(string(ctx.RequestURI()))
+	req, err := mapps.Decode(string(ctx.RequestURI()))
 	if err != nil {
 		log.Print(err, " ", string(ctx.RequestURI()))
 		fmt.Fprint(ctx, "404 Not Found")

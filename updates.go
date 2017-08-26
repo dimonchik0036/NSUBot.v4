@@ -1,13 +1,12 @@
 package main
 
 import (
-	"github.com/dimonchik0036/NSUBot/core"
 	"github.com/dimonchik0036/NSUBot/news"
 	"github.com/dimonchik0036/NSUBot/nsuweather"
 	"time"
 )
 
-func UpdateSection(config *core.Config, newsHandler func([]string, []news.News, string)) {
+func UpdateSection(config *Config, newsHandler func([]string, []news.News, string)) {
 	go weatherUpdate(config.Weather, 2*time.Minute)
 
 	go save(config, 20*time.Second, 5*time.Minute)
@@ -22,7 +21,7 @@ func weatherUpdate(weather *nsuweather.Weather, duration time.Duration) {
 	}
 }
 
-func save(config *core.Config, delay time.Duration, duration time.Duration) {
+func save(config *Config, delay time.Duration, duration time.Duration) {
 	time.Sleep(delay)
 	for {
 		config.Save()
@@ -30,7 +29,7 @@ func save(config *core.Config, delay time.Duration, duration time.Duration) {
 	}
 }
 
-func sitesUpdate(sites *core.Sites, duration time.Duration, handler func([]string, []news.News, string)) {
+func sitesUpdate(sites *Sites, duration time.Duration, handler func([]string, []news.News, string)) {
 	for {
 		sites.Update(handler)
 		time.Sleep(duration)

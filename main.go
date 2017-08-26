@@ -1,14 +1,12 @@
 package main
 
-import (
-	"github.com/dimonchik0036/NSUBot/core"
-)
+import ()
 
 func main() {
 	println("Start")
 	//initDefaultLog() //comment while testing
 	initSystemLog()
-	initConfig(core.LoadConfig())
+	initConfig(LoadConfig())
 	loadBotConfig()
 	go UpdateSection(GlobalConfig, NewsHandler)
 	HandlerStart()

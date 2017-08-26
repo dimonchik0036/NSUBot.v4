@@ -1,4 +1,4 @@
-package core
+package main
 
 const (
 	PermissionAdmin = 666
