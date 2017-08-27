@@ -34,6 +34,7 @@ func main() {
 	loadBotConfig()
 	initPagesMap()
 	initCommandsMap()
+	initVkSites()
 	go UpdateSection(GlobalConfig, NewsHandler)
 	HandlerStart()
 }

@@ -14,6 +14,9 @@ texts:
       body: <div><b>Ошибка доступа</b></div>
       navigation: <navigation> <link pageId="menu_main">Вернуться в начало</link>
         </navigation>
+  feedback:
+    ru:
+      title: Наберите свой отзыв
   menu_main:
     ru:
       title: Главное меню
@@ -27,15 +30,16 @@ texts:
       button: Настройки
       back_button: К настройкам
       navigation: <navigation><link pageId="option_lang">Сменить язык</link><link
-        pageId="menu_main">Главное меню</link> </navigation>
+        pageId="feedback">Оставить отзыв</link><link pageId="menu_main">Главное меню</link>
+        </navigation>
   menu_subscribers:
     ru:
       title: Управление подписками
       button: Подписки
       back_button: К подпискам
-      navigation: <navigation> <link pageId="menu_subscribers">Сайты</link> <link
-        pageId="menu_subscribers">Группы VK</link> </navigation> <navigation> <link
-        pageId="menu_main">К меню</link> </navigation>
+      navigation: <navigation> <link pageId="site_list">Сайты</link> <link pageId="subscriptions_list*5_0">Группы
+        VK</link> </navigation> <navigation> <link pageId="menu_main">К меню</link>
+        </navigation>
   myname:
     ru:
       navigation: <navigation>  <link pageId="menu_main">К меню</link> </navigation>
@@ -50,6 +54,14 @@ texts:
       navigation: <navigation> <link pageId="option_lang*ru">Русский</link> <link
         pageId="option_lang*en">English</link></navigation> <navigation><link pageId="menu_option">К
         настройкам</link> </navigation>
+  site_list:
+    ru:
+      body: <div><b>Выберете сайт</b></div>
+      navigation: <navigation> <link pageId="subscriptions_list*1_0">Сайт НГУ</link>
+        <link pageId="subscriptions_list*0_0">Сайт ФИТ</link> <link pageId="subscriptions_list*2_0">Сайт
+        ММФ</link> <link pageId="subscriptions_list*3_0">Сайт ФП</link> <link pageId="subscriptions_list*4_0">Сайт
+        ФилФ</link> </navigation> <navigation> <link pageId="menu_subscribers">Вернуться</link>
+        </navigation>
   start:
     ru:
       body: <div><b>Приветствую!</b><br/>Теперь я - ваш помощник.<br/> Я позволяю
@@ -58,6 +70,14 @@ texts:
       button: Начало
       back_button: К началу
       navigation: <navigation> <link pageId="menu_main">Главное меню</link> </navigation>
+  subscriptions_list:
+    ru:
+      body: <b>Выберете раздел, на который хотите подписаться</b>
+      optional:
+      - Предыдущая страница
+      - Следующая страница
+      - Вернуться назад
+      - 'Страница '
   success:
     ru:
       body: <div><b>Успешно</b></div>

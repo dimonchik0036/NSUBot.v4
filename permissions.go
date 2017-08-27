@@ -6,7 +6,11 @@ const (
 	PermissionUser  = 0
 )
 
-func (u *Users) ChangePermission(subscriber string, permission int) {
+func (u *Users) ChangePermission(subscriber string, permission int) bool {
 	user := u.User(subscriber)
+	if user == nil {
+		return false
+	}
 	user.Permission = permission
+	return true
 }

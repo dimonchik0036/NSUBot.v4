@@ -49,11 +49,11 @@ type User struct {
 	mapps.User
 	SitesMux           sync.RWMutex `json:"-"`
 	Sites              *Set         `json:"sites,omitempty"`
-	Permission         int          `json:"permission,omitempty"`
-	DateCreated        int64        `json:"date_created,omitempty"`
-	DateLastActivities int64        `json:"date_last_activities,omitempty"`
-	MessageCount       int64        `json:"message_count,omitempty"`
-	Lang               string       `json:"lang,omitempty"`
+	Permission         int          `json:"permission"`
+	DateCreated        int64        `json:"date_created"`
+	DateLastActivities int64        `json:"date_last_activities"`
+	MessageCount       int64        `json:"message_count"`
+	Lang               string       `json:"lang"`
 	Queue              sync.Mutex   `json:"-"`
 }
 
@@ -67,15 +67,34 @@ func (u *User) Sub(href string) {
 	u.Sites.Add(href)
 }
 
+func (u *User) CheckSub(href string) bool {
+	u.SitesMux.Lock()
+	defer u.SitesMux.Unlock()
+	if u.Sites == nil {
+		u.Sites = new(Set)
+		return false
+	}
+
+	return u.Sites.Check(href)
+}
+
 func (u *User) UnSub(href string) {
 	u.SitesMux.Lock()
 	defer u.SitesMux.Unlock()
+	if u.Sites == nil {
+		u.Sites = new(Set)
+	}
+
 	u.Sites.Del(href)
 }
 
 func (u *User) ChangeSub(href string) {
 	u.SitesMux.Lock()
 	defer u.SitesMux.Unlock()
+	if u.Sites == nil {
+		u.Sites = new(Set)
+	}
+
 	u.Sites.Change(href)
 }
 
@@ -89,11 +108,11 @@ func (u *User) NewUserString() string {
 		"Дата регистрации: %s", mapps.EscapeString(u.Subscriber), mapps.EscapeString(u.Protocol), mapps.EscapeString(time.Unix(u.DateCreated, 0).Format(UserLayout)))
 }
 
-func (u *User) FullString() string {
-	return fmt.Sprintf("ID:%s"+mapps.Br+
-		"Платформа: %s"+mapps.Br+
-		"Дата регистрации: %s"+mapps.Br+
-		"Последняя активность: %s"+mapps.Br+
+func (u *User) FullString(sep string) string {
+	return fmt.Sprintf("ID:%s"+sep+
+		"Платформа: %s"+sep+
+		"Дата регистрации: %s"+sep+
+		"Последняя активность: %s"+sep+
 		"Уровень допуска: %s", mapps.EscapeString(u.Subscriber), mapps.EscapeString(u.Protocol), mapps.EscapeString(time.Unix(u.DateCreated, 0).Format(UserLayout)), mapps.EscapeString(time.Unix(u.DateLastActivities, 0).Format(UserLayout)), mapps.EscapeString(strconv.Itoa(u.Permission)))
 }
 
@@ -122,4 +141,16 @@ func (u *Users) Add(user *User) {
 	}
 
 	u.Users[user.Key()] = user
+}
+
+func (u *Users) Sample(s func(*User) bool) (result []*User) {
+	u.Mux.RLock()
+	defer u.Mux.RUnlock()
+
+	for _, user := range u.Users {
+		if s(user) {
+			result = append(result, user)
+		}
+	}
+	return
 }

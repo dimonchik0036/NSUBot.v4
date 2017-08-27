@@ -2,16 +2,18 @@ package main
 
 import (
 	"github.com/dimonchik0036/Miniapps-pro-SDK"
+	"log"
 	"strings"
 )
 
 var CommandsMap Handlers
 
 const (
-	CmdMenu   = "menu"
-	CmdStart  = "start"
-	CmdGod    = "god"
-	CmdMyName = "myname"
+	CmdMenu     = "menu"
+	CmdStart    = "start"
+	CmdGod      = "god"
+	CmdMyName   = "myname"
+	CmdFeedback = StrPageFeedback
 )
 
 func initCommandsMap() {
@@ -27,6 +29,7 @@ func initCommandsMap() {
 	CommandsMap.AddHandler(Handler{Handler: CommandMenu}, CmdMenu)
 	CommandsMap.AddHandler(Handler{Handler: CommandStart}, CmdStart)
 	CommandsMap.AddHandler(Handler{Handler: CommandMyName}, CmdMyName)
+	CommandsMap.AddHandler(Handler{Handler: CommandFeedback}, CmdFeedback)
 	initAdminCommands(&CommandsMap)
 }
 
@@ -44,7 +47,8 @@ func CommandHandler(request *mapps.Request, subscriber *User) bool {
 	handler, ok := CommandsMap.GetHandler(request.Event.Text)
 	if ok {
 		if handler.PermissionLevel > subscriber.Permission {
-			result = PageErrorPermission(request, subscriber)
+			log.Print("Ошибка доступа у " + subscriber.String())
+			return false
 		} else {
 			result = handler.Handler(request, subscriber)
 		}
@@ -56,6 +60,15 @@ func CommandHandler(request *mapps.Request, subscriber *User) bool {
 	}
 
 	return false
+}
+
+func CommandFeedback(request *mapps.Request, subscriber *User) string {
+	_, args := DecodeCommand(request.Event.Text)
+	if args != "" {
+		request.SetField(StrPageFeedback, args)
+	}
+
+	return PageFeedback(request, subscriber)
 }
 
 func CommandMenu(request *mapps.Request, subscriber *User) string {

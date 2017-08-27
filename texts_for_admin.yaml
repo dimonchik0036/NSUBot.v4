@@ -2,9 +2,30 @@ texts:
   admin_menu:
     ru:
       title: Панель управления
-      navigation: <navigation> <link pageId="reload_texts">Обновить локализацию</link>
-        </navigation><navigation> <link pageId="menu_main">Вернуться к меню</link>
-        </navigation>
+      navigation: <navigation> <link pageId="reload_texts">Обновить локализацию</link><link
+        pageId="change_perm">Изменить привелегии</link> </navigation><navigation>
+        <link pageId="admin_vk">Управление VK группами</link> </navigation><navigation>
+        <link pageId="menu_main">Вернуться к меню</link> </navigation>
+  admin_vk:
+    ru:
+      body: <div><input navigationId="submit" name="admin_vk" title="Используйте add
+        [domain] [title] и del [domain]"/></div>
+      navigation: <navigation id="submit"> <link pageId="admin_vk">Отправить</link>
+        </navigation> <navigation> <link pageId="admin_menu">Назад в меню</link> </navigation>
+      optional:
+      - Недостаточно агрументов
+  change_perm:
+    ru:
+      body: <div><input navigationId="submit" name="change_perm" title="Введите уровень
+        доступа и ключ пользователя"/></div>
+      navigation: <navigation id="submit"> <link pageId="change_perm">Отправить</link>
+        </navigation> <navigation> <link pageId="admin_menu">Назад в меню</link> </navigation>
+      optional:
+      - Недостаточно агрументов
+      - Не удаётся преобразовать уровень доступа
+      - Неверный ключ пользователя
+      - Успешно изменён
+      - Все админки сброшены
   reload_texts:
     ru:
       body: <div><b>Чьи тексты обновить?</b></div>

@@ -16,24 +16,40 @@ type Site struct {
 func (s *Site) Sub(subscriber string) {
 	s.Mux.Lock()
 	defer s.Mux.Unlock()
+	if s.Subscribers == nil {
+		s.Subscribers = new(Set)
+	}
+
 	s.Subscribers.Add(subscriber)
 }
 
 func (s *Site) UnSub(subscriber string) {
 	s.Mux.Lock()
 	defer s.Mux.Unlock()
+	if s.Subscribers == nil {
+		s.Subscribers = new(Set)
+	}
 	s.Subscribers.Del(subscriber)
 }
 
 func (s *Site) ChangeSub(subscriber string) {
 	s.Mux.Lock()
 	defer s.Mux.Unlock()
+	if s.Subscribers == nil {
+		s.Subscribers = new(Set)
+	}
+
 	s.Subscribers.Change(subscriber)
 }
 
 func (s *Site) Check(subscriber string) bool {
 	s.Mux.RLock()
 	defer s.Mux.RUnlock()
+
+	if s.Subscribers == nil {
+		s.Subscribers = new(Set)
+		return false
+	}
 	return s.Subscribers.Check(subscriber)
 }
 
