@@ -6,8 +6,51 @@ import (
 	"github.com/dimonchik0036/NSUBot/news"
 	"github.com/valyala/fasthttp"
 	"log"
+	"sync"
 	"time"
 )
+
+type Handler struct {
+	PermissionLevel int
+	Handler         func(request *mapps.Request, user *User) string
+}
+
+type Handlers struct {
+	Mux                sync.RWMutex
+	Handler            map[string]Handler
+	CommandInterpreter func(string) string
+}
+
+func (h Handlers) AddHandler(handler Handler, key ...string) {
+	h.Mux.Lock()
+	defer h.Mux.Unlock()
+
+	if h.Handler == nil {
+		h.Handler = map[string]Handler{}
+	}
+
+	for _, v := range key {
+		h.Handler[v] = handler
+	}
+}
+
+func (h *Handlers) GetHandler(key string) (Handler, bool) {
+	h.Mux.RLock()
+	defer h.Mux.RUnlock()
+	handler, ok := h.Handler[h.CommandInterpreter(key)]
+	return handler, ok
+}
+
+func NewHandlers(commandInterpreter func(string) string) Handlers {
+	return Handlers{
+		Handler:            map[string]Handler{},
+		CommandInterpreter: commandInterpreter,
+	}
+}
+
+func checkHandler(user *User, handler Handler) bool {
+	return user.Permission >= handler.PermissionLevel
+}
 
 func NewsHandler(subscribers []string, news []news.News, title string) {
 	for _, s := range subscribers {
@@ -29,26 +72,19 @@ func MainHandler(request *mapps.Request) {
 	subscriber := CheckNewSubscriber(request)
 	subscriber.Queue.Lock()
 	defer subscriber.Queue.Unlock()
+
+	subscriber.MessageCount++
+	printLog(request, subscriber)
+
+	if !CommandHandler(request, subscriber) {
+		PagesHandler(request, subscriber)
+	}
+}
+
+func printLog(request *mapps.Request, subscriber *User) {
 	SystemLoger.Print(request.AllFields())
 	log.Print(subscriber.String() + " " + request.String())
 	refreshSubscriber(subscriber)
-
-	switch string(request.Page) {
-	default:
-		fmt.Fprint(request.Ctx,
-			mapps.Page("",
-				mapps.Div("", mapps.EscapeString(time.Now().Format(time.RFC3339))),
-				mapps.Navigation("",
-					mapps.Link("",
-						"One",
-						"_1"),
-					mapps.Link("",
-						"Two",
-						"_2"),
-				),
-			),
-		)
-	}
 }
 
 func stringCheck(s string) string {

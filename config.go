@@ -64,7 +64,7 @@ func loadBotConfig() {
 	}{}
 
 	if err := yaml.Unmarshal(data, &tmp); err != nil {
-		log.Panicf("Bot config: yaml throw error: %s", err.Error())
+		log.Panicf("Bot config: json throw error: %s", err.Error())
 		return
 	}
 

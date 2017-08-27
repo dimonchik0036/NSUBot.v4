@@ -9,7 +9,7 @@ import (
 func UpdateSection(config *Config, newsHandler func([]string, []news.News, string)) {
 	go weatherUpdate(config.Weather, 2*time.Minute)
 
-	go save(config, 20*time.Second, 5*time.Minute)
+	go save(config, 10*time.Second, 10*time.Second)
 
 	go sitesUpdate(config.Sites, 45*time.Second, newsHandler)
 }

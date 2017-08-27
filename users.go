@@ -11,21 +11,23 @@ import (
 var GlobalSubscribers *Users
 
 func CheckNewSubscriber(request *mapps.Request) *User {
-	user := GlobalSubscribers.User(request.Subscriber)
+	key := request.User()
+	user := GlobalSubscribers.User(key.Key())
 	if user == nil {
-		return newUser(request.User())
+		return newUser(request)
 	}
 	return user
 }
 
-func newUser(user mapps.User) (subscriber *User) {
+func newUser(request *mapps.Request) (subscriber *User) {
 	subscriber = new(User)
 	subscriber.Queue.Lock()
 	defer subscriber.Queue.Unlock()
-	subscriber.User = user
+	subscriber.User = request.User()
 	GlobalSubscribers.Add(subscriber)
 
 	subscriber.Permission = PermissionUser
+	subscriber.Lang = request.Lang
 	t := time.Now().Unix()
 	subscriber.DateCreated = t
 	subscriber.DateLastActivities = t
@@ -46,10 +48,12 @@ const (
 type User struct {
 	mapps.User
 	SitesMux           sync.RWMutex `json:"-"`
-	Sites              *Set         `json:"sites"`
-	Permission         int          `json:"permission"`
-	DateCreated        int64        `json:"date_created"`
-	DateLastActivities int64        `json:"date_last_activities"`
+	Sites              *Set         `json:"sites,omitempty"`
+	Permission         int          `json:"permission,omitempty"`
+	DateCreated        int64        `json:"date_created,omitempty"`
+	DateLastActivities int64        `json:"date_last_activities,omitempty"`
+	MessageCount       int64        `json:"message_count,omitempty"`
+	Lang               string       `json:"lang,omitempty"`
 	Queue              sync.Mutex   `json:"-"`
 }
 
@@ -117,5 +121,5 @@ func (u *Users) Add(user *User) {
 		u.Users = map[string]*User{}
 	}
 
-	u.Users[user.Subscriber] = user
+	u.Users[user.Key()] = user
 }

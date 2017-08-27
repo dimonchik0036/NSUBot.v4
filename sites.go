@@ -76,7 +76,7 @@ func (s *Sites) ChangeSub(href string, user *User) {
 		log.Printf("%s wtf?!?! href %s not found", user.String(), href)
 		return
 	}
-	site.ChangeSub(user.Subscriber)
+	site.ChangeSub(user.Key())
 }
 
 func (s *Sites) Sub(href string, user *User) {
@@ -88,7 +88,7 @@ func (s *Sites) Sub(href string, user *User) {
 		return
 	}
 
-	site.Sub(user.Subscriber)
+	site.Sub(user.Key())
 }
 
 func (s *Sites) UnSub(href string, user *User) {
@@ -100,7 +100,7 @@ func (s *Sites) UnSub(href string, user *User) {
 		return
 	}
 
-	site.UnSub(user.Subscriber)
+	site.UnSub(user.Key())
 }
 
 func (s *Sites) CheckUser(href string, user *User) bool {
@@ -112,7 +112,7 @@ func (s *Sites) CheckUser(href string, user *User) bool {
 		return false
 	}
 
-	return site.Check(user.Subscriber)
+	return site.Check(user.Key())
 }
 
 func (s *Sites) Update(handler func([]string, []news.News, string)) {
