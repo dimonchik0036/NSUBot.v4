@@ -1,0 +1,16 @@
+texts:
+  admin_menu:
+    ru:
+      title: Панель управления
+      navigation: <navigation> <link pageId="reload_texts">Обновить локализацию</link>
+        </navigation><navigation> <link pageId="menu_main">Вернуться к меню</link>
+        </navigation>
+  reload_texts:
+    ru:
+      body: <div><b>Чьи тексты обновить?</b></div>
+      navigation: <navigation> <link pageId="reload_texts*users">Пользователей</link>
+        <link pageId="reload_texts*admin">Админа</link> </navigation><navigation>
+        <link pageId="admin_menu">Вернуться к меню</link> </navigation>
+      optional:
+      - Успешно обновлён
+      - Неверный файл

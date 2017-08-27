@@ -66,6 +66,7 @@ func (t *Texts) Get(key string, lang string) *Text {
 	loc, ok := t.Texts[key]
 	if !ok {
 		Admin.SendMessage(key + " not found!")
+		return FakeText
 	}
 
 	return loc.Get(lang)

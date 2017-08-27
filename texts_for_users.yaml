@@ -1,0 +1,74 @@
+texts:
+  404_not_found:
+    ru:
+      body: <div><b>Неверная страница</b></div>
+      navigation: <navigation> <link pageId="menu_main">Вернуться в начало</link>
+        </navigation>
+  error:
+    ru:
+      body: <div><b>Произошла какая-то ошибка</b></div>
+      navigation: <navigation> <link pageId="menu_main">Вернуться в начало</link>
+        </navigation>
+  error_permission:
+    ru:
+      body: <div><b>Ошибка доступа</b></div>
+      navigation: <navigation> <link pageId="menu_main">Вернуться в начало</link>
+        </navigation>
+  menu_main:
+    ru:
+      title: Главное меню
+      button: Главное меню
+      back_button: К главному меню
+      navigation: <navigation> <link pageId="weather">Температура</link> <link pageId="menu_subscribers">Управление
+        подписками</link><link pageId="menu_option">Настройки</link> </navigation>
+  menu_option:
+    ru:
+      title: Настройки
+      button: Настройки
+      back_button: К настройкам
+      navigation: <navigation><link pageId="option_lang">Сменить язык</link><link
+        pageId="menu_main">Главное меню</link> </navigation>
+  menu_subscribers:
+    ru:
+      title: Управление подписками
+      button: Подписки
+      back_button: К подпискам
+      navigation: <navigation> <link pageId="menu_subscribers">Сайты</link> <link
+        pageId="menu_subscribers">Группы VK</link> </navigation> <navigation> <link
+        pageId="menu_main">К меню</link> </navigation>
+  option_lang:
+    en:
+      title: Choose language
+      navigation: <navigation> <link pageId="option_lang*ru">Русский</link> <link
+        pageId="option_lang*en">English</link></navigation> <navigation><link pageId="menu_option">To
+        options</link> </navigation>
+    ru:
+      title: Выберете язык
+      navigation: <navigation> <link pageId="option_lang*ru">Русский</link> <link
+        pageId="option_lang*en">English</link></navigation> <navigation><link pageId="menu_option">К
+        настройкам</link> </navigation>
+  start:
+    ru:
+      body: <div><b>Приветствую!</b><br/>Теперь я - ваш помощник.<br/> Я позволяю
+        получить быстрый доступ к температуре воздуха или же вы можете подписаться
+        на рассылку новостей с различных сайтов и групп.</div>
+      button: Начало
+      back_button: К началу
+      navigation: <navigation> <link pageId="menu_main">Главное меню</link> </navigation>
+  success:
+    ru:
+      body: <div><b>Успешно</b></div>
+      navigation: <navigation> <link pageId="menu_main">Вернуться к меню</link> </navigation>
+  weather:
+    en:
+      button: Temperature
+      navigation: <navigation>  <link pageId="weather">Reload</link><link pageId="menu_main">To
+        menu</link> </navigation>
+      optional:
+      - 'Last update time: '
+    ru:
+      button: Температура
+      navigation: <navigation>  <link pageId="weather">Обновить</link><link pageId="menu_main">К
+        меню</link> </navigation>
+      optional:
+      - 'Время последнего обновления: '

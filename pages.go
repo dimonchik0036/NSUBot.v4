@@ -35,6 +35,7 @@ func initPagesMap() {
 	PagesMap.AddHandler(Handler{Handler: PageOptionLang}, StrPageOptionLang)
 	PagesMap.AddHandler(Handler{Handler: PageMenuSubscribers}, StrPageMenuSubscribers)
 	PagesMap.AddHandler(Handler{Handler: PageSuccess}, StrPageSuccess)
+	initAdminPages(&PagesMap)
 }
 
 func DecodePage(p string) (string, string) {
