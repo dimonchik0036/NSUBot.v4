@@ -8,9 +8,10 @@ import (
 var CommandsMap Handlers
 
 const (
-	CmdMenu  = "menu"
-	CmdStart = "start"
-	CmdGod   = "god"
+	CmdMenu   = "menu"
+	CmdStart  = "start"
+	CmdGod    = "god"
+	CmdMyName = "myname"
 )
 
 func initCommandsMap() {
@@ -25,6 +26,7 @@ func initCommandsMap() {
 
 	CommandsMap.AddHandler(Handler{Handler: CommandMenu}, CmdMenu)
 	CommandsMap.AddHandler(Handler{Handler: CommandStart}, CmdStart)
+	CommandsMap.AddHandler(Handler{Handler: CommandMyName}, CmdMyName)
 	initAdminCommands(&CommandsMap)
 }
 
@@ -62,4 +64,8 @@ func CommandMenu(request *mapps.Request, subscriber *User) string {
 
 func CommandStart(request *mapps.Request, subscriber *User) string {
 	return PageStart(request, subscriber)
+}
+
+func CommandMyName(request *mapps.Request, subscriber *User) string {
+	return PageMyName(request, subscriber)
 }

@@ -4,7 +4,7 @@ import "github.com/dimonchik0036/Miniapps-pro-SDK"
 
 const (
 	CmdAdminReloadTexts = "reload_texts"
-	CmdAdminMenu = "admin_menu"
+	CmdAdminMenu        = "admin_menu"
 
 	StrPageAdminReloadTexts = CmdAdminReloadTexts
 )
@@ -12,17 +12,17 @@ const (
 func initAdminCommands(handlers *Handlers) {
 	handlers.AddHandler(Handler{Handler: CommandGod}, CmdGod)
 	handlers.AddHandler(Handler{Handler: CommandAdminReloadTexts, PermissionLevel: PermissionAdmin}, CmdAdminReloadTexts)
-	handlers.AddHandler(Handler{Handler: CommandAdminMenu, PermissionLevel:PermissionAdmin}, CmdAdminMenu, "admin")
+	handlers.AddHandler(Handler{Handler: CommandAdminMenu, PermissionLevel: PermissionAdmin}, CmdAdminMenu, "admin")
 }
 
 func initAdminPages(handlers *Handlers) {
-	handlers.AddHandler(Handler{Handler:PageAdminMenu, PermissionLevel:PermissionAdmin}, CmdAdminMenu)
-	handlers.AddHandler(Handler{Handler:PageAdminReloadTexts,PermissionLevel:PermissionAdmin}, StrPageAdminReloadTexts)
+	handlers.AddHandler(Handler{Handler: PageAdminMenu, PermissionLevel: PermissionAdmin}, CmdAdminMenu)
+	handlers.AddHandler(Handler{Handler: PageAdminReloadTexts, PermissionLevel: PermissionAdmin}, StrPageAdminReloadTexts)
 }
 
 func CommandAdminReloadTexts(request *mapps.Request, subscriber *User) string {
 	_, args := DecodeCommand(request.Event.Text)
-	request.Page += "*"+args
+	request.Page += "*" + args
 	return PageAdminReloadTexts(request, subscriber)
 }
 
@@ -48,9 +48,9 @@ func PageAdminReloadTexts(request *mapps.Request, subscriber *User) string {
 	}
 
 	return mapps.Page(mapps.Attributes(mapps.TelegramLinksRealignmentThreshold(20)),
-				mapps.Div("",
-				t.GetOptional(0),
-				),
+		mapps.Div("",
+			t.GetOptional(0),
+		),
 		t.Navigation,
 	)
 }

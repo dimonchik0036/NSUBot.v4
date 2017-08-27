@@ -18,6 +18,7 @@ const (
 	StrPageMenuOption      = "menu_option"
 	StrPageMenuSubscribers = "menu_subscribers"
 	StrPageOptionLang      = "option_lang"
+	StrPageMyName          = CmdMyName
 )
 
 func initPagesMap() {
@@ -81,6 +82,16 @@ func PageStart(request *mapps.Request, subscriber *User) string {
 func PageMenuMain(request *mapps.Request, subscriber *User) string {
 	t := TextsForUsers.Get(StrPageMenuMain, subscriber.Lang)
 	return t.DoPage("")
+}
+
+func PageMyName(request *mapps.Request, subscriber *User) string {
+	t := TextsForUsers.Get(StrPageMyName, subscriber.Lang)
+	return mapps.Page("",
+		mapps.Div("",
+			mapps.Bold(subscriber.String()),
+		),
+		t.Navigation,
+	)
 }
 
 func PageErrorPermission(request *mapps.Request, subscriber *User) string {

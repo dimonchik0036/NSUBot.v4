@@ -36,6 +36,9 @@ texts:
       navigation: <navigation> <link pageId="menu_subscribers">Сайты</link> <link
         pageId="menu_subscribers">Группы VK</link> </navigation> <navigation> <link
         pageId="menu_main">К меню</link> </navigation>
+  myname:
+    ru:
+      navigation: <navigation>  <link pageId="menu_main">К меню</link> </navigation>
   option_lang:
     en:
       title: Choose language
