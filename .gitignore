@@ -2,6 +2,6 @@
 .*config
 *.txt
 *.json
-*.yaml
-*.yml
+*_tmp.*
+*_new.*
 local
