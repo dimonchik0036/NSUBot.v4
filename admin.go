@@ -11,28 +11,59 @@ const (
 	CmdAdminMenu             = "admin_menu"
 	CmdAdminChangePermission = "change_perm"
 	CmdAdminVkMenu           = "admin_vk"
+	CmdAdminSiteSync         = "site_sync"
 
 	StrPageAdminReloadTexts      = CmdAdminReloadTexts
 	StrPageAdminChangePermission = CmdAdminChangePermission
 	StrPageAdminMenu             = CmdAdminMenu
 	StrPageAdminVkMenu           = CmdAdminVkMenu
+	StrPageAdminSiteSync         = CmdAdminSiteSync
 )
 
 func initAdminCommands(handlers *Handlers) {
 	handlers.AddHandler(Handler{Handler: CommandGod}, CmdGod)
 	handlers.AddHandler(Handler{Handler: CommandAdminMenu, PermissionLevel: PermissionAdmin}, CmdAdminMenu, "admin")
 	handlers.AddHandler(Handler{Handler: CommandAdminVkMenu, PermissionLevel: PermissionAdmin}, CmdAdminVkMenu)
+	handlers.AddHandler(Handler{Handler: CommandAdminSiteSync, PermissionLevel: PermissionAdmin}, CmdAdminSiteSync)
 	handlers.AddHandler(Handler{Handler: CommandAdminReloadTexts, PermissionLevel: PermissionAdmin}, CmdAdminReloadTexts)
 	handlers.AddHandler(Handler{Handler: CommandAdminChangePermission, PermissionLevel: PermissionAdmin}, CmdAdminChangePermission)
+
 }
 
 func initAdminPages(handlers *Handlers) {
 	handlers.AddHandler(Handler{Handler: PageAdminMenu, PermissionLevel: PermissionAdmin}, StrPageAdminMenu)
 	handlers.AddHandler(Handler{Handler: PageAdminVkMenu, PermissionLevel: PermissionAdmin}, StrPageAdminVkMenu)
+	handlers.AddHandler(Handler{Handler: PageAdminSiteSync, PermissionLevel: PermissionAdmin}, StrPageAdminSiteSync)
 	handlers.AddHandler(Handler{Handler: PageAdminReloadTexts, PermissionLevel: PermissionAdmin}, StrPageAdminReloadTexts)
 	handlers.AddHandler(Handler{Handler: PageAdminChangePermission, PermissionLevel: PermissionAdmin}, StrPageAdminChangePermission)
+
 }
 
+func CommandAdminSiteSync(request *mapps.Request, subscriber *User) string {
+	return PageAdminSiteSync(request, subscriber)
+}
+func PageAdminSiteSync(request *mapps.Request, subscriber *User) string {
+	for _, u := range GlobalSubscribers.Users {
+		u.Sites = nil
+	}
+
+	GlobalSites.Mux.Lock()
+	defer GlobalSites.Mux.Unlock()
+	for _, s := range GlobalSites.Sites {
+		if s.Subscribers == nil {
+			continue
+		}
+
+		for _, u := range s.Subscribers.GetAll() {
+			sub := GlobalSubscribers.User(u)
+			if sub != nil {
+				sub.Sub(s.Site.URL)
+			}
+		}
+	}
+
+	return PageSuccess(request, subscriber)
+}
 func CommandAdminReloadTexts(request *mapps.Request, subscriber *User) string {
 	_, args := DecodeCommand(request.Event.Text)
 	request.Page += "*" + args

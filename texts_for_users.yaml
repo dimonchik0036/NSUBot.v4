@@ -22,7 +22,7 @@ texts:
       title: Главное меню
       button: Главное меню
       back_button: К главному меню
-      navigation: <navigation> <link pageId="weather">Температура</link> <link pageId="menu_subscribers">Управление
+      navigation: <navigation> <link pageId="weather">Температура</link> <link pageId="menu_subscribers" protocol="telegram; facebook; vkontakte;">Управление
         подписками</link><link pageId="menu_option">Настройки</link> </navigation>
   menu_option:
     ru:
@@ -30,7 +30,7 @@ texts:
       button: Настройки
       back_button: К настройкам
       navigation: <navigation><link pageId="option_lang">Сменить язык</link><link
-        pageId="feedback">Оставить отзыв</link><link pageId="menu_main">Главное меню</link>
+        pageId="feedback" protocol="telegram; facebook; vkontakte;">Оставить отзыв</link><link pageId="menu_main">Главное меню</link>
         </navigation>
   menu_subscribers:
     ru:
@@ -72,7 +72,7 @@ texts:
       navigation: <navigation> <link pageId="menu_main">Главное меню</link> </navigation>
   subscriptions_list:
     ru:
-      body: <b>Выберете раздел, на который хотите подписаться</b>
+      body: <b>Выберете разделы, на которые хотите подписаться</b>
       optional:
       - Предыдущая страница
       - Следующая страница

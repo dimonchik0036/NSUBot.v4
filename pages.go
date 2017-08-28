@@ -123,7 +123,7 @@ func PageSuccess(request *mapps.Request, subscriber *User) string {
 
 func PageWeather(request *mapps.Request, subscriber *User) string {
 	t := TextsForUsers.Get(StrPageWeather, subscriber.Lang)
-	return mapps.Page(mapps.Attributes(mapps.TelegramLinksRealignmentThreshold(40)),
+	return mapps.Page("",
 		mapps.Div("",
 			mapps.Bold(GlobalWeather.ShowWeather())+mapps.Br+
 				t.GetOptional(0)+GlobalWeather.ShowTime(),
@@ -155,29 +155,29 @@ func PageFeedback(request *mapps.Request, subscriber *User) string {
 
 func PageMenuOption(request *mapps.Request, subscriber *User) string {
 	t := TextsForUsers.Get(StrPageMenuOption, subscriber.Lang)
-	return t.DoPage(mapps.Attributes(mapps.TelegramLinksRealignmentThreshold(40)))
+	return t.DoPage("")
 }
 
 func PageOptionLang(request *mapps.Request, subscriber *User) string {
 	t := TextsForUsers.Get(StrPageOptionLang, subscriber.Lang)
 	_, arg := DecodePage(request.Page)
 	if arg == "" {
-		return t.DoPage(mapps.Attributes(mapps.TelegramLinksRealignmentThreshold(40)))
+		return t.DoPage("")
 	}
 
 	subscriber.Lang = arg
 	t = TextsForUsers.Get(StrPageOptionLang, subscriber.Lang)
-	return t.DoPage(mapps.Attributes(mapps.TelegramLinksRealignmentThreshold(40)))
+	return t.DoPage("")
 }
 
 func PageMenuSubscribers(request *mapps.Request, subscriber *User) string {
 	t := TextsForUsers.Get(StrPageMenuSubscribers, subscriber.Lang)
-	return t.DoPage(mapps.Attributes(mapps.TelegramLinksRealignmentThreshold(40)))
+	return t.DoPage(mapps.Attributes(mapps.TelegramLinksRealignmentThreshold(20)))
 }
 
 func PageSiteList(request *mapps.Request, subscriber *User) string {
 	t := TextsForUsers.Get(StrPageSiteList, subscriber.Lang)
-	return t.DoPage(mapps.Attributes(mapps.TelegramLinksRealignmentThreshold(40)))
+	return t.DoPage(mapps.Attributes(mapps.TelegramLinksRealignmentThreshold(20)))
 }
 
 func PageSubscriptionsList(request *mapps.Request, subscriber *User) string {
@@ -263,7 +263,7 @@ func PageSubscriptionsList(request *mapps.Request, subscriber *User) string {
 			t.GetOptional(2),
 		),
 	)
-	return mapps.Page(mapps.Attributes(mapps.TelegramLinksRealignmentThreshold(40)),
+	return mapps.Page(mapps.Attributes(mapps.TelegramLinksRealignmentThreshold(20)),
 		mapps.Div("",
 			t.Body+mapps.Br+
 				mapps.Bold("",

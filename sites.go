@@ -13,6 +13,19 @@ type Site struct {
 	Subscribers *Set         `json:"users"`
 }
 
+func (s *Site) Clear() {
+	s.Mux.Lock()
+	defer s.Mux.Unlock()
+	if s.Subscribers != nil {
+		for _, u := range s.Subscribers.GetAll() {
+			sub := GlobalSubscribers.User(u)
+			if sub != nil {
+				sub.UnSub(s.Site.URL)
+			}
+		}
+	}
+}
+
 func (s *Site) Sub(subscriber string) {
 	s.Mux.Lock()
 	defer s.Mux.Unlock()
@@ -81,6 +94,10 @@ func (s *Sites) AddSite(site *Site) {
 func (s *Sites) DelSite(href string) {
 	s.Mux.Lock()
 	defer s.Mux.Unlock()
+	u := s.Sites[href]
+	if u != nil {
+		u.Clear()
+	}
 	delete(s.Sites, href)
 }
 

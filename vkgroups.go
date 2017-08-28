@@ -53,7 +53,7 @@ func addVkGroup(data string) string {
 	}
 
 	site := Site{
-		Site: news.NewVkSite(int64(len(vkGroupSites.Groups)), args[0], args[1]),
+		Site: news.NewVkSite(int64(len(vkGroupSites.Groups)), strings.ToLower(args[0]), args[1]),
 	}
 
 	_, err := site.Site.Update(2)
@@ -74,6 +74,7 @@ func addVkGroup(data string) string {
 }
 
 func delVkGroup(data string) string {
+	data = strings.ToLower(data)
 	vkGroupSites.Mux.Lock()
 	defer vkGroupSites.Mux.Unlock()
 	var index int

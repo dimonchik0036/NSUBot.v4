@@ -3,7 +3,6 @@ package news
 import (
 	"github.com/dimonchik0036/vk-api"
 	"sort"
-	"strings"
 )
 
 const (
@@ -48,7 +47,7 @@ func SetVkServiceKey(key string) {
 func NewVkSite(id int64, domain string, title string) *Site {
 	return &Site{
 		ID:           id,
-		URL:          VkHref + "/" + strings.ToLower(domain),
+		URL:          VkHref + "/" + domain,
 		Title:        title,
 		OptionalURL:  domain,
 		NewsFunc:     Vk,

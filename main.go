@@ -28,7 +28,7 @@ func main() {
 	println("Start")
 	loadAllTexts(FilenameTextsUsers, &TextsForUsers)
 	loadAllTexts(FilenameTextsAdmin, &TextsForAdmin)
-	//initDefaultLog() //comment while testing
+	initDefaultLog() //comment while testing
 	initSystemLog()
 	initConfig(LoadConfig())
 	loadBotConfig()
