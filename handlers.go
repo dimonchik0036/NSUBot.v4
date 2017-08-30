@@ -56,7 +56,7 @@ func NewsHandler(subscribers []string, news []news.News, title string) {
 	for _, s := range subscribers {
 		subscriber := GlobalSubscribers.User(s)
 		if subscriber == nil {
-			log.Printf("%s %s", subscriber.String(), "WTF?! nil pointer in newshandler: "+title)
+			log.Printf("%s %s", s, " WTF?! nil pointer in newshandler: "+title)
 			continue
 		}
 

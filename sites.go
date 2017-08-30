@@ -153,14 +153,12 @@ func (s *Sites) Update(handler func([]string, []news.News, string)) {
 		news, err := site.Site.Update(5)
 		if err != nil {
 			log.Printf("%s error: %s", site.Site.Title, err.Error())
-			continue
 		}
 
-		if len(news) == 0 {
-			continue
+		if err == nil && site.Subscribers != nil && len(news) > 0 {
+			go handler(site.Subscribers.GetAll(), news, site.Site.Title)
 		}
 
-		go handler(site.Subscribers.GetAll(), news, site.Site.Title)
 		time.Sleep(250 * time.Millisecond)
 	}
 }

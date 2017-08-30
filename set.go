@@ -47,6 +47,7 @@ func (s *Set) Change(item string) {
 func (s *Set) GetAll() (result []string) {
 	s.Mux.RLock()
 	defer s.Mux.RUnlock()
+
 	for k := range s.Set {
 		result = append(result, k)
 	}
