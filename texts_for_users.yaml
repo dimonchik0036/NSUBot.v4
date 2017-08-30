@@ -1,0 +1,151 @@
+texts:
+  404_not_found:
+    en:
+      body: <div><b>Wrong page</b></div>
+      navigation: <navigation>  <link pageId="menu_main">Back to the menu</link> </navigation>
+    ru:
+      body: <div><b>Неверная страница</b></div>
+      navigation: <navigation>  <link pageId="menu_main">Вернуться в меню</link> </navigation>
+  error:
+    en:
+      body: <div><b>Some error happens</b></div>
+      navigation: <navigation>  <link pageId="menu_main">Back to the menu</link> </navigation>
+    ru:
+      body: <div><b>Произошла какая-то ошибка</b></div>
+      navigation: <navigation>  <link pageId="menu_main">Вернуться в меню</link> </navigation>
+  error_permission:
+    en:
+      body: <div><b>Permission denied</b></div>
+      navigation: <navigation>  <link pageId="menu_main">Back to the menu</link> </navigation>
+    ru:
+      body: <div><b>Ошибка доступа</b></div>
+      navigation: <navigation>  <link pageId="menu_main">Вернуться в меню</link> </navigation>
+  feedback:
+    en:
+      title: Type your review
+    ru:
+      title: Наберите свой отзыв
+  menu_main:
+    en:
+      title: Main menu
+      button: Main menu
+      back_button: To main menu
+      navigation: <navigation> <link pageId="weather">Temperature</link> <link pageId="menu_subscribers">Subscription
+        management</link><link pageId="menu_option">Settings</link> </navigation>
+    ru:
+      title: Главное меню
+      button: Главное меню
+      back_button: К главному меню
+      navigation: <navigation> <link pageId="weather">Температура</link> <link pageId="menu_subscribers">Управление
+        подписками</link><link pageId="menu_option">Настройки</link> </navigation>
+  menu_option:
+    en:
+      title: Settings
+      button: Settings
+      back_button: Go to settings
+      navigation: <navigation><link pageId="option_lang">Change language</link><link
+        pageId="feedback">Give feedback</link><link pageId="menu_main">Main menu</link>
+        </navigation>
+    ru:
+      title: Настройки
+      button: Настройки
+      back_button: К настройкам
+      navigation: <navigation><link pageId="option_lang">Сменить язык</link><link
+        pageId="feedback">Оставить отзыв</link><link pageId="menu_main">Главное меню</link>
+        </navigation>
+  menu_subscribers:
+    en:
+      title: Subscription management
+      button: Subscriptions
+      back_button: Go to subscriptions
+      navigation: <navigation> <link pageId="site_list">Sites</link> <link pageId="subscriptions_list*5_0">Groups
+        VK</link> </navigation> <navigation> <link pageId="menu_main">Main menu</link>
+        </navigation>
+    ru:
+      title: Управление подписками
+      button: Подписки
+      back_button: К подпискам
+      navigation: <navigation> <link pageId="site_list">Сайты</link> <link pageId="subscriptions_list*5_0">Группы
+        VK</link> </navigation> <navigation> <link pageId="menu_main">К меню</link>
+        </navigation>
+  myname:
+    en:
+      navigation: <navigation>  <link pageId="menu_main">Back to the menu</link> </navigation>
+    ru:
+      navigation: <navigation>  <link pageId="menu_main">Вернуться в меню</link> </navigation>
+  option_lang:
+    en:
+      title: Choose language
+      navigation: <navigation> <link pageId="option_lang*ru">Русский</link> <link
+        pageId="option_lang*en">English</link></navigation> <navigation><link pageId="menu_option">To
+        options</link> </navigation>
+    ru:
+      title: Выберете язык
+      navigation: <navigation> <link pageId="option_lang*ru">Русский</link> <link
+        pageId="option_lang*en">English</link></navigation> <navigation><link pageId="menu_option">К
+        настройкам</link> </navigation>
+  site_list:
+    en:
+      body: <div><b>Choose site</b></div>
+      navigation: <navigation> <link pageId="subscriptions_list*1_0">Site NSU</link>
+        <link pageId="subscriptions_list*0_0">Site FIT</link> <link pageId="subscriptions_list*2_0">Site
+        MMD</link> <link pageId="subscriptions_list*3_0">Сайт ФП</link> <link pageId="subscriptions_list*4_0">Сайт
+        ФилФ</link> </navigation> <navigation> <link pageId="menu_subscribers">Вернуться</link>
+        </navigation>
+    ru:
+      body: <div><b>Выберете сайт</b></div>
+      navigation: <navigation> <link pageId="subscriptions_list*1_0">Сайт НГУ</link>
+        <link pageId="subscriptions_list*0_0">Сайт ФИТ</link> <link pageId="subscriptions_list*2_0">Сайт
+        ММФ</link> <link pageId="subscriptions_list*3_0">Сайт ФП</link> <link pageId="subscriptions_list*4_0">Сайт
+        ФилФ</link> </navigation> <navigation> <link pageId="menu_subscribers">Вернуться</link>
+        </navigation>
+  start:
+    en:
+      body: <div><b>Greetings!</b><br>Now I'm your assistant.<br> With my help, you
+        can get a quick access to temperature or you can subscribe to the newsletter
+        from various sites and groups.</div>
+      button: Menu
+      back_button: To menu
+      navigation: <navigation>  <link pageId="menu_main">Back to the menu</link> </navigation>
+    ru:
+      body: <div><b>Приветствую!</b><br/>Теперь я - ваш помощник.<br> С моей помощью
+        вы можете получить быстрый доступ к температуре воздуха или же вы можете подписаться
+        на рассылку новостей с различных сайтов и групп.</div>
+      button: Начало
+      back_button: К началу
+      navigation: <navigation>  <link pageId="menu_main">Вернуться в меню</link> </navigation>
+  subscriptions_list:
+    en:
+      body: <b>Choose section, which you want to subscribe</b>
+      optional:
+      - Previous page
+      - Next page
+      - Go back
+      - 'Page '
+    ru:
+      body: <b>Выберете раздел, на который хотите подписаться</b>
+      optional:
+      - Предыдущая страница
+      - Следующая страница
+      - Вернуться назад
+      - 'Страница '
+  success:
+    en:
+      body: <div><b>Successfully</b></div>
+      navigation: <navigation>  <link pageId="menu_main">Back to the menu</link> </navigation>
+    ru:
+      body: <div><b>Успешно</b></div>
+      navigation: <navigation>  <link pageId="menu_main">Вернуться в меню</link> </navigation>
+  weather:
+    en:
+      button: Temperature
+      navigation: <navigation>  <link pageId="weather">Reload</link><link pageId="menu_main">To
+        menu</link> </navigation>
+      optional:
+      - 'Last update time: '
+    ru:
+      button: Температура
+      navigation: <navigation>  <link pageId="weather">Обновить</link><link pageId="menu_main">К
+        меню</link> </navigation>
+      optional:
+      - 'Время последнего обновления: '
