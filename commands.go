@@ -14,6 +14,7 @@ const (
 	CmdGod      = "god"
 	CmdMyName   = "myname"
 	CmdFeedback = StrPageFeedback
+	CmdHelp     = StrPageHelp
 )
 
 func initCommandsMap() {
@@ -26,11 +27,17 @@ func initCommandsMap() {
 		return s
 	})
 
+	CommandsMap.AddHandler(Handler{Handler: CommandHelp}, CmdHelp)
 	CommandsMap.AddHandler(Handler{Handler: CommandMenu}, CmdMenu)
 	CommandsMap.AddHandler(Handler{Handler: CommandStart}, CmdStart)
 	CommandsMap.AddHandler(Handler{Handler: CommandMyName}, CmdMyName)
 	CommandsMap.AddHandler(Handler{Handler: CommandFeedback}, CmdFeedback)
+	CommandsMap.AddHandler(Handler{Handler: CommandScheduleToday}, "today", "t", "сегодня")
+	CommandsMap.AddHandler(Handler{Handler: CommandScheduleTomorrow}, "tomorrow", "tm", "завтра")
+
 	initAdminCommands(&CommandsMap)
+	initBotNewsCommand(&CommandsMap)
+	initVipCommands(&CommandsMap)
 }
 
 func DecodeCommand(cmd string) (string, string) {
@@ -75,10 +82,24 @@ func CommandMenu(request *mapps.Request, subscriber *User) string {
 	return PageMenuMain(request, subscriber)
 }
 
+func CommandHelp(request *mapps.Request, subscriber *User) string {
+	return PageHelp(request, subscriber)
+}
+
 func CommandStart(request *mapps.Request, subscriber *User) string {
 	return PageStart(request, subscriber)
 }
 
 func CommandMyName(request *mapps.Request, subscriber *User) string {
 	return PageMyName(request, subscriber)
+}
+
+func CommandScheduleToday(request *mapps.Request, subscriber *User) string {
+	request.Page = StrPageShowSchedule + "*" + "0"
+	return PageShowSchedule(request, subscriber)
+}
+
+func CommandScheduleTomorrow(request *mapps.Request, subscriber *User) string {
+	request.Page = StrPageShowSchedule + "*" + "1"
+	return PageShowSchedule(request, subscriber)
 }

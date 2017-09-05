@@ -110,10 +110,8 @@ func (s *Site) Update(countCheck int) (newNews []News, err error) {
 
 func (s *Site) InitFunc() {
 	switch s.NewsFuncName {
-	case NsuFacFuncName:
-		s.NewsFunc = NsuFac
 	case NsuFuncName:
-		s.NewsFunc = Nsu
+		s.NewsFunc = NsuRss
 	case FitFuncName:
 		s.NewsFunc = Fit
 	case PhilosFuncName:

@@ -1,10 +1,19 @@
 texts:
+  addbotnews:
+    ru:
+      body: <div><input navigationId="submit" name="addbotnews" title="Введите новость"/></div>
+      navigation: <navigation id="submit"> <link pageId="addbotnews">Отправить</link>
+        </navigation> <navigation> <link pageId="botnewsmenu">Назад в меню</link>
+        </navigation>
+      optional:
+      - Добавлено
   admin_menu:
     ru:
       title: Панель управления
       navigation: <navigation> <link pageId="reload_texts">Обновить локализацию</link><link
         pageId="change_perm">Изменить привелегии</link> </navigation><navigation>
-        <link pageId="admin_vk">Управление VK группами</link> </navigation><navigation>
+        <link pageId="admin_vk">Управление VK группами</link><link pageId="send">Отправить
+        сообщение</link> <link pageId="botnewsmenu">Управление новостями бота</link></navigation><navigation>
         <link pageId="menu_main">Вернуться к меню</link> </navigation>
   admin_vk:
     ru:
@@ -14,6 +23,12 @@ texts:
         </navigation> <navigation> <link pageId="admin_menu">Назад в меню</link> </navigation>
       optional:
       - Недостаточно агрументов
+  botnewsmenu:
+    ru:
+      body: <div><b>Управление новостями бота</b></div>
+      navigation: <navigation> <link pageId="reloadbotnews">Перезагрузка новостей</link><link
+        pageId="addbotnews">Добавить новость</link> </navigation> <navigation> <link
+        pageId="admin_menu">Назад в меню</link> </navigation>
   change_perm:
     ru:
       body: <div><input navigationId="submit" name="change_perm" title="Введите уровень
@@ -35,3 +50,13 @@ texts:
       optional:
       - Успешно обновлён
       - Неверный файл
+  send:
+    ru:
+      body: <div><input navigationId="submit" name="send" title="Введите id и текст"/></div>
+      navigation: <navigation id="submit"> <link pageId="send">Отправить</link> </navigation>
+        <navigation> <link pageId="admin_menu">Назад в меню</link> </navigation>
+      optional:
+      - Недостаточно агрументов
+      - Пользователь не найден
+      - Ошибка при отправке
+      - Отправлено

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/dimonchik0036/Miniapps-pro-SDK"
+	"sort"
 	"strconv"
 	"sync"
 	"time"
@@ -10,13 +11,14 @@ import (
 
 var GlobalSubscribers *Users
 
-func CheckNewSubscriber(request *mapps.Request) *User {
+func CheckNewSubscriber(request *mapps.Request) (*User, bool) {
 	key := request.User()
 	user := GlobalSubscribers.User(key.Key())
 	if user == nil {
-		return newUser(request)
+		return newUser(request), true
 	}
-	return user
+
+	return user, false
 }
 
 func newUser(request *mapps.Request) (subscriber *User) {
@@ -43,18 +45,42 @@ func refreshSubscriber(subscriber *User) *User {
 
 const (
 	UserLayout = "2006/01/02 15:04:05"
+
+	LabelsCount = 5
 )
 
 type User struct {
 	mapps.User
-	SitesMux           sync.RWMutex `json:"-"`
-	Sites              *Set         `json:"sites,omitempty"`
-	Permission         int          `json:"permission"`
-	DateCreated        int64        `json:"date_created"`
-	DateLastActivities int64        `json:"date_last_activities"`
-	MessageCount       int64        `json:"message_count"`
-	Lang               string       `json:"lang"`
-	Queue              sync.Mutex   `json:"-"`
+	SitesMux           sync.RWMutex      `json:"-"`
+	Sites              *Set              `json:"sites,omitempty"`
+	Permission         int               `json:"permission"`
+	DateCreated        int64             `json:"date_created"`
+	DateLastActivities int64             `json:"date_last_activities"`
+	MessageCount       int64             `json:"message_count"`
+	Lang               string            `json:"lang"`
+	Queue              sync.Mutex        `json:"-"`
+	Labels             map[string]string `json:"labels"`
+}
+
+func (u *User) AddLabel(group string, label string) {
+	if u.Labels == nil {
+		u.Labels = map[string]string{}
+	}
+
+	u.Labels[mapps.EscapeString(label)] = group
+}
+
+func (u *User) DelLabel(label string) {
+	delete(u.Labels, label)
+}
+
+func (u *User) AllLabels() []string {
+	var labels []string
+	for k := range u.Labels {
+		labels = append(labels, k)
+	}
+	sort.Strings(labels)
+	return labels
 }
 
 func (u *User) Sub(href string) {
@@ -119,6 +145,12 @@ func (u *User) FullString(sep string) string {
 type Users struct {
 	Mux   sync.RWMutex     `json:"-"`
 	Users map[string]*User `json:"users"`
+}
+
+func (u *Users) Len() int {
+	u.Mux.RLock()
+	defer u.Mux.RUnlock()
+	return len(u.Users)
 }
 
 func (u *Users) Del(subscriber string) {

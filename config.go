@@ -15,7 +15,7 @@ import (
 )
 
 var Admin mapps.User
-var SystemLoger *log.Logger
+var SystemLogger *log.Logger
 var GlobalWeather *nsuweather.Weather
 var GlobalSites *Sites
 var GlobalSchedule *nsuschedule.Schedule
@@ -28,7 +28,7 @@ func initSystemLog() {
 		log.Panic(err)
 	}
 
-	SystemLoger = log.New(file, "", log.LstdFlags)
+	SystemLogger = log.New(file, "", log.LstdFlags)
 }
 
 func initDefaultLog() {
@@ -48,6 +48,7 @@ func initConfig(config *Config) {
 	GlobalSchedule = config.Schedule
 	GlobalSubscribers = config.Users
 	GlobalConfig = config
+	GlobalSchedule = config.Schedule
 }
 
 func loadBotConfig() {
@@ -96,9 +97,10 @@ func NewConfig() (config Config) {
 
 func LoadConfig() *Config {
 	return &Config{
-		Users:   loadUsers(),
-		Weather: loadWeather(),
-		Sites:   loadSites(),
+		Users:    loadUsers(),
+		Weather:  loadWeather(),
+		Sites:    loadSites(),
+		Schedule: loadSchedule(),
 	}
 }
 
@@ -108,14 +110,14 @@ func (c *Config) Save() {
 	saveWeather(c.Weather)
 	saveUsers(c.Users)
 	saveSites(c.Sites)
+	saveSchedule(c.Schedule)
 }
 
 func (c *Config) Reset() {
-	saveWeather(c.Weather)
-	saveUsers(c.Users)
-	saveSites(c.Sites)
+	c.Save()
 	c.Mux.Lock()
 	log.Print("Выключаюсь")
+	Admin.SendMessage("Выключен")
 	os.Exit(0)
 }
 
@@ -139,28 +141,6 @@ func saveAndMarshal(filename string, v interface{}) error {
 	return nil
 }
 
-func saveUsers(users *Users) {
-	users.Mux.RLock()
-	defer users.Mux.RUnlock()
-	if err := saveAndMarshal("users.json", users); err != nil {
-		log.Print(err)
-	}
-}
-
-func saveWeather(weather *nsuweather.Weather) {
-	weather.Mux.RLock()
-	defer weather.Mux.RUnlock()
-	if err := saveAndMarshal("weather.json", weather); err != nil {
-		log.Print(err)
-	}
-}
-
-func saveSites(sites *Sites) {
-	if err := saveAndMarshal("sites.json", sites); err != nil {
-		log.Print(err)
-	}
-}
-
 func loadAndUnmarshal(filename string, v interface{}) error {
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {
@@ -168,6 +148,32 @@ func loadAndUnmarshal(filename string, v interface{}) error {
 	}
 
 	return json.Unmarshal(data, &v)
+}
+
+func saveSchedule(schedule *nsuschedule.Schedule) {
+	schedule.Mux.RLock()
+	defer schedule.Mux.RUnlock()
+	if err := saveAndMarshal("schedule.json", schedule); err != nil {
+		log.Print(err)
+	}
+}
+
+func loadSchedule() *nsuschedule.Schedule {
+	var s nsuschedule.Schedule
+	if err := loadAndUnmarshal("schedule.json", &s); err != nil {
+		log.Print(err)
+		return &nsuschedule.Schedule{}
+	}
+
+	return &s
+}
+
+func saveUsers(users *Users) {
+	users.Mux.RLock()
+	defer users.Mux.RUnlock()
+	if err := saveAndMarshal("users.json", users); err != nil {
+		log.Print(err)
+	}
 }
 
 func loadUsers() *Users {
@@ -180,6 +186,14 @@ func loadUsers() *Users {
 	return &u
 }
 
+func saveWeather(weather *nsuweather.Weather) {
+	weather.Mux.RLock()
+	defer weather.Mux.RUnlock()
+	if err := saveAndMarshal("weather.json", weather); err != nil {
+		log.Print(err)
+	}
+}
+
 func loadWeather() *nsuweather.Weather {
 	var w nsuweather.Weather
 	if err := loadAndUnmarshal("weather.json", &w); err != nil {
@@ -190,6 +204,12 @@ func loadWeather() *nsuweather.Weather {
 	}
 
 	return &w
+}
+
+func saveSites(sites *Sites) {
+	if err := saveAndMarshal("sites.json", sites); err != nil {
+		log.Print(err)
+	}
 }
 
 func loadSites() *Sites {

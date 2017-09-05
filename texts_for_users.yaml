@@ -6,6 +6,14 @@ texts:
     ru:
       body: <div><b>Неверная страница</b></div>
       navigation: <navigation>  <link pageId="menu_main">Вернуться в меню</link> </navigation>
+  bnlist:
+    ru:
+      navigation: <navigation><link pageId="menu_option">Назад</link> </navigation>
+      optional:
+      - 'Обновление: '
+      - Нет никаких новостей.
+      - Предыдущая новость
+      - Следующая новость
   error:
     en:
       body: <div><b>Some error happens</b></div>
@@ -25,18 +33,54 @@ texts:
       title: Type your review
     ru:
       title: Наберите свой отзыв
+  help:
+    ru:
+      body:  '<div protocol="telegram"><b>Подсказки живут здесь</b><br/>
+          Бот позволяет подписаться на <b>рассылку</b> новостей. Это значит, что как только новость появится, то она прилетит к вам.<br/><br/>
+          Расписание обновляется каждый час.<br/>
+          В расписании <b>указывается чётность недели</b>, а так же подсказка о том, с какой стороны находится нужная пара.<br/>
+          Если пара делится на чётную и нечётную, то такая пара будет разделена слэшем ("<b>/</b>"), а пара, соответствующая текущей неделе, будет выделена жирным шрифтом (при возможности).<br/><br/>
+          Чтобы каждый раз не писать номер группы, можно добавить группу в <b>закладку</b> (не более 5 групп).<br/>
+          Для этого нужно пройти в <i>Расписание » Управление закладками » Добавить закладку</i> и следовать инструкции.<br/>
+          Таким образом можно легко следить не только за своим расписанием.<br/><br/>
+          Чтобы сразу попасть к расписанию на сегодня, можно написать "<b>t</b>", на завтра "<b>tm</b>".<br/><br/>
+          Вопросы можно задать сюда t.me/dimonchik0036 или сюда vk.me/dimonchik0036.</div>
+          <div protocol="facebook; vkontakte;">Подсказки живут здесь. Вопросы можно задать сюда t.me/dimonchik0036 или сюда vk.me/dimonchik0036.</div>'
+      navigation: <navigation><link pageId="menu_option">К настройкам</link> </navigation>
+  l_add:
+    ru:
+      navigation: <navigation><link pageId="menu_l">Назад</link> </navigation>
+      optional:
+      - Введите номер группы и название для неё
+      - Отсутствует группа и/или название для неё, повторите попытку
+      - Группа не найдена, повторите попытку
+      - Группа успешно добавлена, можете добавить ещё
+      - Превышен лимит на закладки
+      - Слишком длинное имя, повторите попытку
+  l_del:
+    ru:
+      body: <div><b>Выберите закладку, которую нужно удалить</b></div>
+      navigation: <navigation><link pageId="menu_l">К закладкам</link> </navigation>
+  menu_l:
+    ru:
+      body: <div><b>Управление закладками</b></div>
+      navigation: <navigation><link pageId="l_add">Добавить закладку</link> <link
+        pageId="l_del">Удалить закладку</link></navigation><navigation><link pageId="menu_schedule">К
+        расписанию</link> </navigation>
   menu_main:
     en:
       title: Main menu
       button: Main menu
       back_button: To main menu
-      navigation: <navigation> <link pageId="weather">Temperature</link> <link pageId="menu_subscribers">Subscription
+      navigation: <navigation> <link pageId="weather">Temperature</link> <link pageId="menu_schedule">Schedule</link><link
+        pageId="menu_subscribers" protocol="telegram; facebook; vkontakte;">Subscription
         management</link><link pageId="menu_option">Settings</link> </navigation>
     ru:
       title: Главное меню
       button: Главное меню
       back_button: К главному меню
-      navigation: <navigation> <link pageId="weather">Температура</link> <link pageId="menu_subscribers">Управление
+      navigation: <navigation> <link pageId="weather">Температура</link><link pageId="menu_schedule">Расписание</link>
+        <link pageId="menu_subscribers" protocol="telegram; facebook; vkontakte;">Управление
         подписками</link><link pageId="menu_option">Настройки</link> </navigation>
   menu_option:
     en:
@@ -44,15 +88,27 @@ texts:
       button: Settings
       back_button: Go to settings
       navigation: <navigation><link pageId="option_lang">Change language</link><link
-        pageId="feedback">Give feedback</link><link pageId="menu_main">Main menu</link>
-        </navigation>
+        pageId="help">Tips</link><link pageId="bnlist">Список обновлений</link><link
+        pageId="feedback">Give feedback</link></navigation><navigation><link pageId="menu_main">Main
+        menu</link> </navigation>
     ru:
       title: Настройки
       button: Настройки
       back_button: К настройкам
       navigation: <navigation><link pageId="option_lang">Сменить язык</link><link
-        pageId="feedback">Оставить отзыв</link><link pageId="menu_main">Главное меню</link>
-        </navigation>
+        pageId="help">Подсказки</link><link pageId="bnlist">Список обновлений</link><link
+        pageId="feedback">Оставить отзыв</link></navigation><navigation><link pageId="menu_main">Главное
+        меню</link> </navigation>
+  menu_schedule:
+    ru:
+      title: Меню расписания
+      button: Расписание
+      back_button: К расписанию
+      navigation: <navigation><link pageId="sh_s*2">Сегодня</link><link pageId="sh_s*3">Завтра</link>
+        </navigation><navigation><link pageId="we_s"  protocol="telegram; facebook;
+        vkontakte;">На неделю</link> </navigation><navigation protocol="telegram;
+        facebook; vkontakte;"><link pageId="menu_l">Управление закладками</link> </navigation><navigation><link
+        pageId="menu_main">Вернуться в меню</link> </navigation>
   menu_subscribers:
     en:
       title: Subscription management
@@ -84,6 +140,13 @@ texts:
       navigation: <navigation> <link pageId="option_lang*ru">Русский</link> <link
         pageId="option_lang*en">English</link></navigation> <navigation><link pageId="menu_option">К
         настройкам</link> </navigation>
+  sh_s:
+    ru:
+      navigation: <navigation><link pageId="menu_schedule">Назад</link> </navigation>
+      optional:
+      - Введите группу
+      - Группа не найдена, повторите попытку
+      - Добавить закладку
   site_list:
     en:
       body: <div><b>Choose site</b></div>
@@ -101,16 +164,16 @@ texts:
         </navigation>
   start:
     en:
-      body: <div><b>Greetings!</b><br>Now I'm your assistant.<br> With my help, you
-        can get a quick access to temperature or you can subscribe to the newsletter
+      body: <div><b>Greetings!</b><br/>Now I'm your assistant.<br/> With my help,
+        you can get a quick access to temperature, schedule or you can subscribe to the newsletter
         from various sites and groups.</div>
       button: Menu
       back_button: To menu
       navigation: <navigation>  <link pageId="menu_main">Back to the menu</link> </navigation>
     ru:
-      body: <div><b>Приветствую!</b><br/>Теперь я - ваш помощник.<br> С моей помощью
-        вы можете получить быстрый доступ к температуре воздуха или же вы можете подписаться
-        на рассылку новостей с различных сайтов и групп.</div>
+      body: <div><b>Приветствую!</b><br/>Теперь я - ваш помощник.<br/> С моей помощью
+        вы можете получить быстрый доступ к температуре воздуха, расписанию или же вы можете подписаться
+        на рассылку новостей с различных сайтов и групп.<br/><b>Раздел подсказок находится в настройках.</b></div>
       button: Начало
       back_button: К началу
       navigation: <navigation>  <link pageId="menu_main">Вернуться в меню</link> </navigation>
@@ -136,6 +199,13 @@ texts:
     ru:
       body: <div><b>Успешно</b></div>
       navigation: <navigation>  <link pageId="menu_main">Вернуться в меню</link> </navigation>
+  we_s:
+    ru:
+      navigation: <navigation><link pageId="menu_schedule">Назад</link> </navigation>
+      optional:
+      - Введите группу
+      - Группа не найдена, повторите попытку
+      - Добавить закладку
   weather:
     en:
       button: Temperature

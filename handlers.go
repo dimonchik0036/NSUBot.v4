@@ -48,10 +48,6 @@ func NewHandlers(commandInterpreter func(string) string) Handlers {
 	}
 }
 
-func checkHandler(user *User, handler Handler) bool {
-	return user.Permission >= handler.PermissionLevel
-}
-
 func NewsHandler(subscribers []string, news []news.News, title string) {
 	for _, s := range subscribers {
 		subscriber := GlobalSubscribers.User(s)
@@ -69,12 +65,16 @@ func NewsHandler(subscribers []string, news []news.News, title string) {
 }
 
 func MainHandler(request *mapps.Request) {
-	subscriber := CheckNewSubscriber(request)
+	subscriber, ok := CheckNewSubscriber(request)
 	subscriber.Queue.Lock()
 	defer subscriber.Queue.Unlock()
-
 	subscriber.MessageCount++
 	printLog(request, subscriber)
+
+	if ok {
+		request.Ctx.WriteString(PageStart(request, subscriber))
+		return
+	}
 
 	if !CommandHandler(request, subscriber) {
 		PagesHandler(request, subscriber)
@@ -82,7 +82,7 @@ func MainHandler(request *mapps.Request) {
 }
 
 func printLog(request *mapps.Request, subscriber *User) {
-	SystemLoger.Print(request.AllFields())
+	SystemLogger.Print(request.AllFields())
 	log.Print(subscriber.String() + " " + request.String())
 	refreshSubscriber(subscriber)
 }
