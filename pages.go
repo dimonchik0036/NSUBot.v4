@@ -157,7 +157,7 @@ func PageWeather(request *mapps.Request, subscriber *User) string {
 func PageFeedback(request *mapps.Request, subscriber *User) string {
 	key := request.GetField(StrPageFeedback)
 	if key != "" {
-		Admin.SendMessage(subscriber.FullString(" ") + " оставил отзыв: " + key)
+		Admin.SendMessageTelegram(subscriber.FullString(" ") + " оставил отзыв: " + key)
 		return PageMenuOption(request, subscriber)
 	}
 

@@ -179,7 +179,7 @@ func (s *Schedule) GetDay(group string, day int) (string, bool) {
 }
 
 const (
-	scheduleUrl = "http://table.nsu.ru/json"
+	scheduleUrl = "http://table.nsu.ru/api"
 )
 
 func getSchedule() (University, error) {
@@ -215,12 +215,7 @@ func (s *Schedule) Update() {
 	u, err := getSchedule()
 	if err != nil {
 		log.Print("Bad schedule update: ", err)
-		time.Sleep(5 * time.Minute)
-		u, err = getSchedule()
-		if err != nil {
-			log.Print("Very bad schedule update: ", err)
-			return
-		}
+		return
 	}
 
 	s.Schedule = u.MakeSchedule()

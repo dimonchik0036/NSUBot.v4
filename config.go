@@ -117,7 +117,7 @@ func (c *Config) Reset() {
 	c.Save()
 	c.Mux.Lock()
 	log.Print("Выключаюсь")
-	Admin.SendMessage("Выключен")
+	Admin.SendMessageTelegram("Выключен")
 	os.Exit(0)
 }
 

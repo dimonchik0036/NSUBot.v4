@@ -14,7 +14,7 @@ func UpdateSection(config *Config, newsHandler func([]string, []news.News, strin
 
 	go sitesUpdate(config.Sites, 45*time.Second, newsHandler)
 
-	go scheduleUpdate(config.Schedule, time.Hour)
+	go scheduleUpdate(config.Schedule, 30*time.Minute)
 }
 
 func weatherUpdate(weather *nsuweather.Weather, duration time.Duration) {

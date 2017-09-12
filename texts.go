@@ -129,14 +129,14 @@ func (t *Text) GetOptional(index int) string {
 		return t.Optional[index]
 	}
 
-	Admin.SendMessage("Button: " + t.Button + " optional out of range " + strconv.Itoa(index))
+	Admin.SendMessageTelegram("Button: " + t.Button + " optional out of range " + strconv.Itoa(index))
 	return ""
 }
 
 func loadAllTexts(filename string, v interface{}) {
 	data, err := ioutil.ReadFile(filename + ".yaml")
 	if err != nil {
-		Admin.SendMessage("Ошибка открытия текстов: " + err.Error())
+		Admin.SendMessageTelegram("Ошибка открытия текстов: " + err.Error())
 		log.Print(err)
 		return
 	}
@@ -144,21 +144,21 @@ func loadAllTexts(filename string, v interface{}) {
 	defer TextsForUsers.Mux.Unlock()
 
 	if err := yaml.Unmarshal(data, v); err != nil {
-		Admin.SendMessage("Ошибка расшифровки: " + err.Error())
+		Admin.SendMessageTelegram("Ошибка расшифровки: " + err.Error())
 		log.Print(err)
 		return
 	}
 
 	f, err := os.OpenFile(filename+"_new.yaml", os.O_CREATE|os.O_TRUNC|os.O_WRONLY, os.FileMode(0700))
 	if err != nil {
-		Admin.SendMessage("Ошибка шифровки: " + err.Error())
+		Admin.SendMessageTelegram("Ошибка шифровки: " + err.Error())
 		log.Print(err)
 		return
 	}
 	defer f.Close()
 	data, err = yaml.Marshal(v)
 	if err != nil {
-		Admin.SendMessage("Ошибка шифровки: " + err.Error())
+		Admin.SendMessageTelegram("Ошибка шифровки: " + err.Error())
 		log.Print(err)
 
 		return

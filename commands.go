@@ -15,6 +15,7 @@ const (
 	CmdMyName   = "myname"
 	CmdFeedback = StrPageFeedback
 	CmdHelp     = StrPageHelp
+	CmdWeather  = StrPageWeather
 )
 
 func initCommandsMap() {
@@ -31,6 +32,7 @@ func initCommandsMap() {
 	CommandsMap.AddHandler(Handler{Handler: CommandMenu}, CmdMenu)
 	CommandsMap.AddHandler(Handler{Handler: CommandStart}, CmdStart)
 	CommandsMap.AddHandler(Handler{Handler: CommandMyName}, CmdMyName)
+	CommandsMap.AddHandler(Handler{Handler: CommandWeather}, CmdWeather)
 	CommandsMap.AddHandler(Handler{Handler: CommandFeedback}, CmdFeedback)
 	CommandsMap.AddHandler(Handler{Handler: CommandScheduleToday}, "today", "t", "сегодня")
 	CommandsMap.AddHandler(Handler{Handler: CommandScheduleTomorrow}, "tomorrow", "tm", "завтра")
@@ -80,6 +82,10 @@ func CommandFeedback(request *mapps.Request, subscriber *User) string {
 
 func CommandMenu(request *mapps.Request, subscriber *User) string {
 	return PageMenuMain(request, subscriber)
+}
+
+func CommandWeather(request *mapps.Request, subscriber *User) string {
+	return PageWeather(request, subscriber)
 }
 
 func CommandHelp(request *mapps.Request, subscriber *User) string {

@@ -57,11 +57,19 @@ func NewsHandler(subscribers []string, news []news.News, title string) {
 		}
 
 		for _, n := range news {
-			if err := subscriber.SendMessageBlock(mapps.Div("", mapps.EscapeString(title)+mapps.Br+mapps.EscapeString(n.URL)+mapps.Br+mapps.Br+stringCheck(n.Title)+stringCheck(n.Decryption)+mapps.EscapeString(time.Unix(n.Date, 0).Format("02.01.2006")))); err != nil {
+			if err := subscriber.SendMessageBlock(mapps.Div("", mapps.EscapeString(title)+mapps.Br+mapps.EscapeString(n.URL)+mapps.Br+mapps.Br+stringCheck(n.Title, subscriber.Protocol)+stringCheck(n.Decryption, subscriber.Protocol)+helpHandler(time.Unix(n.Date, 0).Format("02.01.2006"), subscriber.Protocol, false))); err != nil {
 				log.Printf("%s %s", subscriber.String(), err.Error())
 			}
 		}
 	}
+}
+
+func helpHandler(text string, platform string, br bool) string {
+	if br {
+		return mapps.EscapeStringNotBr(text)
+	}
+
+	return mapps.EscapeString(text)
 }
 
 func MainHandler(request *mapps.Request) {
@@ -87,11 +95,11 @@ func printLog(request *mapps.Request, subscriber *User) {
 	refreshSubscriber(subscriber)
 }
 
-func stringCheck(s string) string {
+func stringCheck(s string, platform string) string {
 	if s == "" {
 		return ""
 	} else {
-		return mapps.EscapeString(s) + mapps.Br
+		return helpHandler(s, platform, true) + mapps.Br
 	}
 }
 
@@ -108,6 +116,7 @@ func fastHTTPHandler(ctx *fasthttp.RequestCtx) {
 }
 
 func HandlerStart() {
-	Admin.SendMessage("Начинаю!")
+	Admin.SendMessageTelegram("Начинаю!")
+	fmt.Sprintln()
 	fasthttp.ListenAndServe(Port, fastHTTPHandler)
 }
