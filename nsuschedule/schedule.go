@@ -71,8 +71,7 @@ type ScheduleWeek struct {
 func (s *ScheduleWeek) Week() (result [7]string) {
 	for day := 0; day < 7; day++ {
 		var lessons [7][]*Lesson
-		result[day] = dayString[day] + mapps.Br + s.Faculty + mapps.Br + s.Group + mapps.Br
-
+		result[day] = dayString[day] + mapps.Br + s.Faculty + mapps.Br + s.Group + mapps.Br + evenString() + mapps.Br
 		result[day] = mapps.Bold(result[day])
 
 		for _, l := range s.Lessons[day] {
@@ -88,6 +87,15 @@ func (s *ScheduleWeek) Week() (result [7]string) {
 	return
 }
 
+func evenString() string {
+	_, week := time.Now().ISOWeek()
+	if week%2 == 0 {
+		return "Чётная (слева)"
+	}
+
+	return "Нечётная (справа)"
+}
+
 func (s *ScheduleWeek) Day(day int) (result string) {
 	var lessons [7][]*Lesson
 	now := time.Now().Add(24 * time.Hour * time.Duration(day))
@@ -98,9 +106,9 @@ func (s *ScheduleWeek) Day(day int) (result string) {
 	var even bool
 	if week%2 == 0 {
 		even = true
-		result += "Чётная (справа)" + mapps.Br
+		result += "Чётная (слева)" + mapps.Br
 	} else {
-		result += "Нечётная (слева)" + mapps.Br
+		result += "Нечётная (справа)" + mapps.Br
 	}
 	result = mapps.Bold(result)
 
@@ -262,7 +270,7 @@ func (g *Group) GetLessons() (lessons [7][]*Lesson) {
 type Lesson struct {
 	Subject string `json:"subject"`
 	Type    string `json:"type"`
-	Time    struct {
+	Time struct {
 		Start string `json:"start"`
 		End   string `json:"end"`
 	} `json:"time"`
