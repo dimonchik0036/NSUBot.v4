@@ -30,7 +30,7 @@ func PageVipJoke(request *mapps.Request, subscriber *User) string {
 	}
 
 	return mapps.Page("",
-		mapps.Div("", mapps.EscapeString(joke)),
+		mapps.Div("", mapps.Data(joke)),
 		mapps.Navigation("",
 			mapps.Link("",
 				StrPageVipJoke,

@@ -57,19 +57,35 @@ func NewsHandler(subscribers []string, news []news.News, title string) {
 		}
 
 		for _, n := range news {
-			if err := subscriber.SendMessageBlock(mapps.Div("", mapps.EscapeString(title)+mapps.Br+mapps.EscapeString(n.URL)+mapps.Br+mapps.Br+stringCheck(n.Title, subscriber.Protocol)+stringCheck(n.Decryption, subscriber.Protocol)+helpHandler(time.Unix(n.Date, 0).Format("02.01.2006"), subscriber.Protocol, false))); err != nil {
+			var response string
+			var h func(string) string
+			if subscriber.Protocol == mapps.Telegram {
+				h = func(in string) string {
+					return mapps.EscapeString(mapps.EscapeString(in))
+				}
+			} else {
+				h = func(in string) string {
+					return mapps.EscapeStringYesBr(in)
+				}
+			}
+
+			response += h(title) + mapps.Br + h(n.URL) + mapps.Br + mapps.Br
+			if n.Title != "" {
+				response += h(n.Title) + mapps.Br
+			}
+
+			if n.Decryption != "" && n.Decryption != n.Title {
+				response += h(n.Decryption) + mapps.Br
+			}
+
+			response += h(time.Unix(n.Date, 0).Format("02.01.2006"))
+
+			if err := subscriber.SendMessageBlock(mapps.Div("", response)); err != nil {
 				log.Printf("%s %s", subscriber.String(), err.Error())
 			}
+			time.Sleep(time.Millisecond * 333)
 		}
 	}
-}
-
-func helpHandler(text string, platform string, br bool) string {
-	if br {
-		return mapps.EscapeStringNotBr(text)
-	}
-
-	return mapps.EscapeString(text)
 }
 
 func MainHandler(request *mapps.Request) {
@@ -95,11 +111,11 @@ func printLog(request *mapps.Request, subscriber *User) {
 	refreshSubscriber(subscriber)
 }
 
-func stringCheck(s string, platform string) string {
+func stringCheck(s string) string {
 	if s == "" {
 		return ""
 	} else {
-		return helpHandler(s, platform, true) + mapps.Br
+		return mapps.Data(s) + mapps.Br
 	}
 }
 

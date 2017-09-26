@@ -270,7 +270,7 @@ func (g *Group) GetLessons() (lessons [7][]*Lesson) {
 type Lesson struct {
 	Subject string `json:"subject"`
 	Type    string `json:"type"`
-	Time struct {
+	Time    struct {
 		Start string `json:"start"`
 		End   string `json:"end"`
 	} `json:"time"`

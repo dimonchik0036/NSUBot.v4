@@ -264,7 +264,7 @@ func PageAdminSendMessage(request *mapps.Request, subscriber *User) string {
 		return pageInputHelp(t, 1)
 	}
 
-	err := u.SendMessage(args[1])
+	err := u.SendMessageBlock(mapps.Div("", mapps.Data(args[1])))
 	if err != nil {
 		return pageInputHelp(t, 2)
 	}

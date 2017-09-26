@@ -131,7 +131,7 @@ func (u *User) String() string {
 func (u *User) NewUserString() string {
 	return fmt.Sprintf("ID: %s"+mapps.Br+
 		"Платформа: %s"+mapps.Br+
-		"Дата регистрации: %s", mapps.EscapeString(u.Subscriber), mapps.EscapeString(u.Protocol), mapps.EscapeString(time.Unix(u.DateCreated, 0).Format(UserLayout)))
+		"Дата регистрации: %s", mapps.Data(u.Subscriber), mapps.Data(u.Protocol), mapps.Data(time.Unix(u.DateCreated, 0).Format(UserLayout)))
 }
 
 func (u *User) FullString(sep string) string {
@@ -139,7 +139,7 @@ func (u *User) FullString(sep string) string {
 		"Платформа: %s"+sep+
 		"Дата регистрации: %s"+sep+
 		"Последняя активность: %s"+sep+
-		"Уровень допуска: %s", mapps.EscapeString(u.Subscriber), mapps.EscapeString(u.Protocol), mapps.EscapeString(time.Unix(u.DateCreated, 0).Format(UserLayout)), mapps.EscapeString(time.Unix(u.DateLastActivities, 0).Format(UserLayout)), mapps.EscapeString(strconv.Itoa(u.Permission)))
+		"Уровень допуска: %s", mapps.Data(u.Subscriber), mapps.Data(u.Protocol), mapps.Data(time.Unix(u.DateCreated, 0).Format(UserLayout)), mapps.Data(time.Unix(u.DateLastActivities, 0).Format(UserLayout)), mapps.Data(strconv.Itoa(u.Permission)))
 }
 
 type Users struct {
