@@ -89,9 +89,24 @@ func (s *Site) Update(countCheck int) (newNews []News, err error) {
 	s.Mux.Lock()
 	defer s.Mux.Unlock()
 
+	var max int64 = 0
+	var maxIndex int = 0
+
+	var maxID int64 = s.LastNews.ID
+	var maxIDIndex int = -1
 	for i, n := range news {
-		if (s.LastNews.ID >= n.ID) && n.ID != 0 || (n.URL == s.LastNews.URL) || s.LastNews.Date > n.Date {
-			break
+		if (s.LastNews.ID >= n.ID) && (n.ID != 0) || (n.URL == s.LastNews.URL) || s.LastNews.Date > n.Date {
+			continue
+		}
+
+		if n.Date > max {
+			max = n.Date
+			maxIndex = i
+		}
+
+		if n.ID > maxID {
+			maxID = n.ID
+			maxIDIndex = i
 		}
 
 		if len(n.Decryption) > 3000 {
@@ -101,8 +116,16 @@ func (s *Site) Update(countCheck int) (newNews []News, err error) {
 		newNews = append(newNews, news[i])
 	}
 
-	if news[0].Date >= s.LastNews.Date {
-		s.LastNews = news[0]
+	if maxID != 0 {
+		if maxID >= s.LastNews.ID && maxIDIndex != -1 {
+			s.LastNews = news[maxIDIndex]
+		}
+	} else {
+		if max >= s.LastNews.Date {
+			s.LastNews = news[maxIndex]
+		} else {
+			s.LastNews = news[0]
+		}
 	}
 
 	return reversNews(newNews), nil

@@ -77,8 +77,9 @@ func NewsHandler(subscribers []string, news []news.News, title string) {
 			if n.Decryption != "" && n.Decryption != n.Title {
 				response += h(n.Decryption) + mapps.Br
 			}
-
-			response += h(time.Unix(n.Date, 0).Format("02.01.2006"))
+			if n.Date != 0 {
+				response += h(time.Unix(n.Date, 0).Format("02.01.2006"))
+			}
 
 			if err := subscriber.SendMessageBlock(mapps.Div("", response)); err != nil {
 				log.Printf("%s %s", subscriber.String(), err.Error())

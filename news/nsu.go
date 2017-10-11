@@ -210,11 +210,6 @@ func NsuRss(href string, count int) (news []News, err error) {
 		return []News{}, err
 	}
 
-	dateRg, err := regexp.Compile("<pubDate>.*?</pubDate>")
-	if err != nil {
-		return []News{}, err
-	}
-
 	desRg, err := regexp.Compile("<description><![[]CDATA[[].*?]]></description>")
 	if err != nil {
 		return []News{}, err
@@ -265,14 +260,7 @@ func NsuRss(href string, count int) (news []News, err error) {
 
 				return html.UnescapeString(string(body[begin:end]))
 			}(),
-			Date: func() int64 {
-				t := help(9, 10, dateRg.Find(item))
-				timeS, err := time.Parse(NsuTimeLayout, t)
-				if err != nil {
-					return 0
-				}
-				return timeS.Unix()
-			}(),
+			Date: 0,
 		})
 	}
 
