@@ -57,9 +57,43 @@ var (
 	}
 )
 
+var GlobalParity = Parity{
+	Parity: 0,
+}
+
+type Parity struct {
+	Parity int
+	Mutex  sync.RWMutex
+}
+
+func (p *Parity) Change() {
+	p.Mutex.Lock()
+	defer p.Mutex.Unlock()
+	if p.Parity == 0 {
+		p.Parity = 1
+	} else {
+		p.Parity = 0
+	}
+}
+
+func (p *Parity) GetParity() int {
+	p.Mutex.RLock()
+	defer p.Mutex.RUnlock()
+
+	return p.Parity
+}
+
 type Schedule struct {
 	Mux      sync.RWMutex             `json:"-"`
 	Schedule map[string]*ScheduleWeek `json:"schedule"`
+	Parity   int                      `json:"parity"`
+}
+
+func (s *Schedule) SetParity(p int) {
+	s.Mux.Lock()
+	defer s.Mux.Unlock()
+
+	s.Parity = p
 }
 
 type ScheduleWeek struct {
@@ -89,6 +123,8 @@ func (s *ScheduleWeek) Week() (result [7]string) {
 
 func evenString() string {
 	_, week := time.Now().ISOWeek()
+
+	week += GlobalParity.GetParity()
 	if week%2 == 0 {
 		return "Чётная (слева)"
 	}
@@ -103,6 +139,9 @@ func (s *ScheduleWeek) Day(day int) (result string) {
 	result = dayString[day] + mapps.Br + s.Faculty + mapps.Br + s.Group + mapps.Br
 
 	_, week := now.ISOWeek()
+
+	week += GlobalParity.GetParity()
+
 	var even bool
 	if week%2 == 0 {
 		even = true

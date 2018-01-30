@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/dimonchik0036/Miniapps-pro-SDK"
+	"github.com/dimonchik0036/NSUBot/nsuschedule"
 	"strconv"
 	"strings"
 	"time"
@@ -17,6 +18,7 @@ const (
 	CmdAdminBotSave          = "save"
 	CmdAdminSendMessage      = "send"
 	CmdAdminUsersCount       = "count_users"
+	CmdAdminParity           = "parity"
 
 	StrPageAdminReloadTexts      = CmdAdminReloadTexts
 	StrPageAdminChangePermission = CmdAdminChangePermission
@@ -24,11 +26,13 @@ const (
 	StrPageAdminVkMenu           = CmdAdminVkMenu
 	StrPageAdminSiteSync         = CmdAdminSiteSync
 	StrPageAdminSendMessage      = CmdAdminSendMessage
+	StrPageAdminParity           = CmdAdminParity
 )
 
 func initAdminCommands(handlers *Handlers) {
 	handlers.AddHandler(Handler{Handler: CommandGod}, CmdGod)
 	handlers.AddHandler(Handler{Handler: CommandAdminMenu, PermissionLevel: PermissionAdmin}, CmdAdminMenu, "admin")
+	handlers.AddHandler(Handler{Handler: CommandAdminParity, PermissionLevel: PermissionAdmin}, CmdAdminParity)
 	handlers.AddHandler(Handler{Handler: CommandAdminVkMenu, PermissionLevel: PermissionAdmin}, CmdAdminVkMenu)
 	handlers.AddHandler(Handler{Handler: CommandAdminBotSave, PermissionLevel: PermissionAdmin}, CmdAdminBotSave)
 	handlers.AddHandler(Handler{Handler: CommandAdminBotReset, PermissionLevel: PermissionAdmin}, CmdAdminBotReset)
@@ -47,6 +51,12 @@ func initAdminPages(handlers *Handlers) {
 	handlers.AddHandler(Handler{Handler: PageAdminReloadTexts, PermissionLevel: PermissionAdmin}, StrPageAdminReloadTexts)
 	handlers.AddHandler(Handler{Handler: PageAdminSendMessage, PermissionLevel: PermissionAdmin}, StrPageAdminSendMessage)
 	handlers.AddHandler(Handler{Handler: PageAdminChangePermission, PermissionLevel: PermissionAdmin}, StrPageAdminChangePermission)
+}
+
+func CommandAdminParity(request *mapps.Request, subscriber *User) string {
+	nsuschedule.GlobalParity.Change()
+	GlobalSchedule.SetParity(nsuschedule.GlobalParity.GetParity())
+	return PageSuccess(request, subscriber)
 }
 
 func CommandAdminUsersCount(request *mapps.Request, subscriber *User) string {

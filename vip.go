@@ -1,8 +1,8 @@
 package main
 
 import (
-	"TelegramBot/jokes"
 	"github.com/dimonchik0036/Miniapps-pro-SDK"
+	"github.com/dimonchik0036/jokes"
 )
 
 const (

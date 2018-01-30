@@ -164,6 +164,9 @@ func loadSchedule() *nsuschedule.Schedule {
 		log.Print(err)
 		return &nsuschedule.Schedule{}
 	}
+	nsuschedule.GlobalParity.Mutex.Lock()
+	defer nsuschedule.GlobalParity.Mutex.Unlock()
+	nsuschedule.GlobalParity.Parity = s.Parity
 
 	return &s
 }
