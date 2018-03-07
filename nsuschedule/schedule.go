@@ -126,10 +126,10 @@ func evenString() string {
 
 	week += GlobalParity.GetParity()
 	if week%2 == 0 {
-		return "Чётная (слева)"
+		return "Чётная (справа)"
 	}
 
-	return "Нечётная (справа)"
+	return "Нечётная (слева)"
 }
 
 func (s *ScheduleWeek) Day(day int) (result string) {
@@ -145,9 +145,9 @@ func (s *ScheduleWeek) Day(day int) (result string) {
 	var even bool
 	if week%2 == 0 {
 		even = true
-		result += "Чётная (слева)" + mapps.Br
+		result += "Чётная (справа)" + mapps.Br
 	} else {
-		result += "Нечётная (справа)" + mapps.Br
+		result += "Нечётная (слева)" + mapps.Br
 	}
 	result = mapps.Bold(result)
 
