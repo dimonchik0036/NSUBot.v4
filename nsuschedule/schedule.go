@@ -3,7 +3,7 @@ package nsuschedule
 import (
 	"encoding/json"
 	"errors"
-	"github.com/dimonchik0036/Miniapps-pro-SDK"
+	"github.com/dimonchik0036/Miniapps-wrapper"
 	"github.com/valyala/fasthttp"
 	"log"
 	"strconv"

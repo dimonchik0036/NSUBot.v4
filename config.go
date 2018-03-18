@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/dimonchik0036/Miniapps-pro-SDK"
+	"github.com/dimonchik0036/Miniapps-wrapper"
 	"github.com/dimonchik0036/NSUBot/news"
 	"github.com/dimonchik0036/NSUBot/nsuschedule"
 	"github.com/dimonchik0036/NSUBot/nsuweather"

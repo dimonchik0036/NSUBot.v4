@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/dimonchik0036/Miniapps-pro-SDK"
+	"github.com/dimonchik0036/Miniapps-wrapper"
 	"github.com/dimonchik0036/NSUBot/news"
 	"github.com/valyala/fasthttp"
 	"log"
